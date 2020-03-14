@@ -32,7 +32,8 @@ CREATE TABLE IF NOT EXISTS traducciones(
     titulo       varchar(255),
     descripcion  text,
     servicio_id   int(255),
-CONSTRAINT pk_traducciones PRIMARY KEY(id)
+CONSTRAINT pk_traducciones PRIMARY KEY(id),
+CONSTRAINT fk_traduccion_servicio FOREIGN KEY (servicio_id) REFERENCES servicios(id)
 )ENGINE=InnoDb;
 
 INSERT INTO traducciones VALUES(NULL,"español","Masaje contractura","Masaje para una contractura en la espalda",1);
@@ -44,7 +45,6 @@ CREATE TABLE IF NOT EXISTS reservas(
     id                  int(255) auto_increment not NULL,
     nombre_cliente      varchar(255),
     servicio_id         int(255),
-
 CONSTRAINT pk_reservas PRIMARY KEY(id),
 CONSTRAINT fk_reserva_servicio FOREIGN KEY (servicio_id) REFERENCES servicios(id)
 )ENGINE=InnoDb;
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS horarios(
     reserva_id       int(255),
 CONSTRAINT pk_horarios PRIMARY KEY(id),
 CONSTRAINT fk_horario_servicio FOREIGN KEY (servicio_id) REFERENCES servicios(id),
-CONSTRAINT fk_horario_reserva FOREIGN KEY (servicio_id) REFERENCES reservas(id)
+CONSTRAINT fk_horario_reserva FOREIGN KEY (reserva_id) REFERENCES reservas(id)
 )ENGINE=InnoDb;
 
 INSERT INTO horarios VALUES(NULL,CURDATE(),1,1);
