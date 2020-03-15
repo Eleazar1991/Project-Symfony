@@ -93,7 +93,7 @@ class Traduccion
         return $this;
     }
 
-    public function getServicio(): ?Servicios
+    public function getServicio(): ?Servicio
     {
         return $this->servicio;
     }

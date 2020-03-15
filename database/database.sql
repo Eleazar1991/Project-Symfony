@@ -56,15 +56,13 @@ INSERT INTO reservas VALUES (NULL,"Juan",2);
 CREATE TABLE IF NOT EXISTS horarios(
     id                int(255) auto_increment not NULL,
     dia               datetime,
-    servicio_id       int(255),
-    reserva_id       int(255),
+    servicio_id		  int(255),
 CONSTRAINT pk_horarios PRIMARY KEY(id),
-CONSTRAINT fk_horario_servicio FOREIGN KEY (servicio_id) REFERENCES servicios(id),
-CONSTRAINT fk_horario_reserva FOREIGN KEY (reserva_id) REFERENCES reservas(id)
+CONSTRAINT fk_horario_servicio FOREIGN KEY (servicio_id) REFERENCES servicios(id)
 )ENGINE=InnoDb;
 
-INSERT INTO horarios VALUES(NULL,CURDATE(),1,1);
-INSERT INTO horarios VALUES(NULL,CURDATE(),2,2);
+INSERT INTO horarios VALUES(NULL,CURDATE(),1);
+INSERT INTO horarios VALUES(NULL,CURDATE(),2);
 
 
 CREATE TABLE IF NOT EXISTS horas(

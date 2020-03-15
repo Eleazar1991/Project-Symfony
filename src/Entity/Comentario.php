@@ -55,12 +55,12 @@ class Comentario
         return $this;
     }
 
-    public function getServicio(): ?Servicios
+    public function getServicio(): ?Servicio
     {
         return $this->servicio;
     }
 
-    public function setServicio(?Servicios $servicio): self
+    public function setServicio(?Servicio $servicio): self
     {
         $this->servicio = $servicio;
 

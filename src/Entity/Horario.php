@@ -32,16 +32,6 @@ class Horario
     private $dia;
 
     /**
-     * @var \Reserva
-     *
-     * @ORM\ManyToOne(targetEntity="Reserva")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="reserva_id", referencedColumnName="id")
-     * })
-     */
-    private $reserva;
-
-    /**
      * @var \Servicio
      *
      * @ORM\ManyToOne(targetEntity="Servicio")
@@ -50,6 +40,8 @@ class Horario
      * })
      */
     private $servicio;
+
+
 
     /**
      *
@@ -75,24 +67,12 @@ class Horario
         return $this;
     }
 
-    public function getReserva(): ?Reservas
-    {
-        return $this->reserva;
-    }
-
-    public function setReserva(?Reservas $reserva): self
-    {
-        $this->reserva = $reserva;
-
-        return $this;
-    }
-
-    public function getServicio(): ?Servicios
+    public function getServicio(): ?Servicio
     {
         return $this->servicio;
     }
 
-    public function setServicio(?Servicios $servicio): self
+    public function setServicio(?Servicio $servicio): self
     {
         $this->servicio = $servicio;
 

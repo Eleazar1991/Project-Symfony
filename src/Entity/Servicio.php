@@ -52,6 +52,14 @@ class Servicio
      */
     private $horarios;
 
+    /**
+     *
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Reserva",mappedBy="servicio")
+     */
+    private $reservas;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -84,17 +92,27 @@ class Servicio
      * @return Collection|Traduccion[]
      */
     public function getTraducciones(): Collection{
-        return $this->traduccion;
+        return $this->traducciones;
     }
     
     /**
      *
      *
-     * @return Collection|Horarios[]
+     * @return Collection|Horario[]
      */
 
     public function getHorarios(): Collection{
         return $this->horarios;
+    }
+
+    /**
+     *
+     *
+     * @return Collection|Reserva[]
+     */
+
+    public function getReservas(): Collection{
+        return $this->reservas;
     }
 
 

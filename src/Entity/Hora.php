@@ -67,5 +67,4 @@ class Hora
         return $this;
     }
 
-
 }

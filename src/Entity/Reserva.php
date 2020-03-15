@@ -44,9 +44,17 @@ class Reserva
     /**
      *
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Horario",mappedBy="servicio")
+     * @ORM\OneToMany(targetEntity="App\Entity\Horario",mappedBy="reserva")
      */
     private $horarios;
+
+
+    /**
+     *
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Hora",mappedBy="reserva")
+     */
+    private $horas;
 
     public function getId(): ?int
     {
@@ -65,12 +73,12 @@ class Reserva
         return $this;
     }
 
-    public function getServicio(): ?Servicios
+    public function getServicio(): ?Servicio
     {
         return $this->servicio;
     }
 
-    public function setServicio(?Servicios $servicio): self
+    public function setServicio(?Servicio $servicio): self
     {
         $this->servicio = $servicio;
 
@@ -80,11 +88,22 @@ class Reserva
     /**
      *
      *
-     * @return Collection|Horarios[]
+     * @return Collection|Horario[]
      */
 
     public function getHorarios(): Collection{
         return $this->horarios;
     }
+
+        /**
+     *
+     *
+     * @return Collection|Hora[]
+     */
+
+    public function getHoras(): Collection{
+        return $this->horas;
+    }
+
 
 }
