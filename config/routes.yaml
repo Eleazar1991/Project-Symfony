@@ -1,7 +1,9 @@
 index:
-   path: /
+   path: /servicios
    controller: App\Controller\ServicioController::index
+   methods: ['GET']
 
-servicio_idioma:
-   path: /idioma/{idioma}
-   controller: App\Controller\ServicioController::getByIdioma
+idiomas:
+   path: /servicios/{idioma}
+   controller: App\Controller\TraduccionController::getByTraducciones
+   methods: ['GET']

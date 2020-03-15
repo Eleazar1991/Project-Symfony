@@ -44,15 +44,7 @@ class ServicioController extends AbstractController
 
     }
 
-    public function getByIdioma(Servicio $servicio)
-    {
-        //Cargar repositorio
-        $servicio_repo=$this->getDoctrine()->getRepository(Servicio::class); 
-
-        $servicio=$servicio_repo->findByIdioma([
-            'idioma' => $idioma
-        ]);
-    }
+    //////PRIVATE FUNCTIONS/////////
     private function getTraducciones($traducciones){
         $result=[];
         foreach($traducciones as $traduccion){
@@ -73,7 +65,7 @@ class ServicioController extends AbstractController
     private function getHorarios($horarios){
         $result=[];
         foreach($horarios as $horario){
-            $horario_array=['dia'=>$horario->getDia(),'horas'=>$this->getHorasByHorario($horario->getHoras())];
+            $horario_array=['id'=>$horario->getId(),'dia'=>$horario->getDia(),'horas'=>$horario->getHora()];
             array_push($result,$horario_array);           
         }
         return $result;
@@ -81,16 +73,8 @@ class ServicioController extends AbstractController
     private function getReservas($reservas){
         $result=[];
         foreach($reservas as $reserva){
-            $reserva_array=['nombre_cliente'=>$reserva->getNombreCliente()];
+            $reserva_array=['nombre_cliente'=>$reserva->getNombreCliente(),'horario'=>['id'=>$reserva->getHorario()->getId(),'dia'=>$reserva->getHorario()->getDia(),'hora'=>$reserva->getHorario()->getHora()]];
             array_push($result,$reserva_array);           
-        }
-        return $result;
-    }
-    private function getHorasByHorario($horas){
-        $result=[];
-        foreach($horas as $hora){
-            $hora_array=['hora'=>$hora->getHora()];
-            array_push($result,$hora_array);           
         }
         return $result;
     }

@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Horario
  *
- * @ORM\Table(name="horarios", indexes={@ORM\Index(name="fk_horario_reserva", columns={"reserva_id"}), @ORM\Index(name="fk_horario_servicio", columns={"servicio_id"})})
+ * @ORM\Table(name="horarios", indexes={@ORM\Index(name="fk_horario_servicio", columns={"servicio_id"})})
  * @ORM\Entity
  */
 class Horario
@@ -32,6 +32,20 @@ class Horario
     private $dia;
 
     /**
+     * @var int|null
+     *
+     * @ORM\Column(name="hora", type="integer", nullable=true)
+     */
+    private $hora;
+
+        /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="hora", type="boolean", nullable=true)
+     */
+    private $disponible;
+
+    /**
      * @var \Servicio
      *
      * @ORM\ManyToOne(targetEntity="Servicio")
@@ -41,14 +55,13 @@ class Horario
      */
     private $servicio;
 
-
-
     /**
      *
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Hora",mappedBy="horario")
+     * @ORM\OneToMany(targetEntity="App\Entity\Reserva",mappedBy="horario")
      */
-    private $horas;
+    private $reservas;
+
 
     public function getId(): ?int
     {
@@ -63,6 +76,30 @@ class Horario
     public function setDia(?\DateTimeInterface $dia): self
     {
         $this->dia = $dia;
+
+        return $this;
+    }
+
+    public function getHora(): ?int
+    {
+        return $this->hora;
+    }
+
+    public function setHora(?int $hora): self
+    {
+        $this->hora = $hora;
+
+        return $this;
+    }
+
+    public function getDisponible(): ?bool
+    {
+        return $this->disponible;
+    }
+
+    public function setDisponible(?bool $disponible): self
+    {
+        $this->disponible = $disponible;
 
         return $this;
     }
@@ -82,11 +119,10 @@ class Horario
     /**
      *
      *
-     * @return Collection|Horas[]
+     * @return Collection|Reserva[]
      */
 
-    public function getHoras(): Collection{
-        return $this->horas;
+    public function getReservas(): Collection{
+        return $this->reservas;
     }
-
 }

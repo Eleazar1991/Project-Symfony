@@ -22,18 +22,7 @@ class ServicioRepository extends ServiceEntityRepository
             ->getResult()
 
         ;
-    }
-
-    public function findByIdioma($idioma)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.idioma=:idioma')
-            ->setParameter('idioma',$idioma)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    
+    }    
 
     /*
     public function findOneBySomeField($value): ?Usuario

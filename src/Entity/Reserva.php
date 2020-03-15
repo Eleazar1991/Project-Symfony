@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Reserva
  *
- * @ORM\Table(name="reservas", indexes={@ORM\Index(name="fk_reserva_servicio", columns={"servicio_id"})})
+ * @ORM\Table(name="reservas", indexes={@ORM\Index(name="fk_reserva_servicio", columns={"servicio_id"}),@ORM\Index(name="fk_reserva_horario", columns={"horario_id"})})
  * @ORM\Entity
  */
 class Reserva
@@ -42,19 +42,15 @@ class Reserva
     private $servicio;
 
     /**
+     * @var \Horarios
      *
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Horario",mappedBy="reserva")
+     * @ORM\ManyToOne(targetEntity="Horario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="horario_id", referencedColumnName="id")
+     * })
      */
-    private $horarios;
+    private $horario;
 
-
-    /**
-     *
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Hora",mappedBy="reserva")
-     */
-    private $horas;
 
     public function getId(): ?int
     {
@@ -85,25 +81,18 @@ class Reserva
         return $this;
     }
 
-    /**
-     *
-     *
-     * @return Collection|Horario[]
-     */
-
-    public function getHorarios(): Collection{
-        return $this->horarios;
+    public function getHorario(): ?Horario
+    {
+        return $this->horario;
     }
 
-        /**
-     *
-     *
-     * @return Collection|Hora[]
-     */
+    public function setHorario(?Horario $horario): self
+    {
+        $this->horario = $horario;
 
-    public function getHoras(): Collection{
-        return $this->horas;
+        return $this;
     }
+
 
 
 }
