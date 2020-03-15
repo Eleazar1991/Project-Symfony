@@ -7,3 +7,8 @@ idiomas:
    path: /servicios/{idioma}
    controller: App\Controller\TraduccionController::getByTraducciones
    methods: ['GET']
+  
+disponibles:
+   path: /servicios/disponibles/{dia}/{servicio_id}
+   controller: App\Controller\HorarioController::getServiciosDisponibles
+   methods: ['GET']

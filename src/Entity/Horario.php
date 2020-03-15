@@ -39,9 +39,9 @@ class Horario
     private $hora;
 
         /**
-     * @var bool|null
+     * @var boolean|null
      *
-     * @ORM\Column(name="hora", type="boolean", nullable=true)
+     * @ORM\Column(name="disponible", type="boolean", nullable=true)
      */
     private $disponible;
 
