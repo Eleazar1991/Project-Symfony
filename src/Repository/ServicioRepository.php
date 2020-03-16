@@ -24,15 +24,14 @@ class ServicioRepository extends ServiceEntityRepository
         ;
     }    
 
-    /*
-    public function findOneBySomeField($value): ?Usuario
+
+    public function findOneById($id): ?Servicio
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }

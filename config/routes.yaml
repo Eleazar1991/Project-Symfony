@@ -12,3 +12,8 @@ disponibles:
    path: /servicios/disponibles/{dia}/{servicio_id}
    controller: App\Controller\HorarioController::getServiciosDisponibles
    methods: ['GET']
+
+insertar-reserva:
+   path: /reserva
+   controller: App\Controller\ReservaController::insertarReserva
+   methods: ['POST']

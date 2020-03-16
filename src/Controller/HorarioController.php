@@ -37,8 +37,7 @@ class HorarioController extends AbstractController
                     'servicio' => ['id'=>$horario->getServicio()->getId(),
                                 'precio'=>$horario->getServicio()->getPrecio()]
                 ];
-            }    
-
+            }
         }
         
         return new JsonResponse($response, Response::HTTP_OK);
