@@ -15,31 +15,33 @@ class TraduccionController extends AbstractController
 {
     public function getByTraducciones($idioma)
     {
-        //Cargar repositorio
-        $traduccion_repo=$this->getDoctrine()->getRepository(Traduccion::class); 
+        if($idioma){
+            //Cargar repositorio
+            $traduccion_repo=$this->getDoctrine()->getRepository(Traduccion::class); 
 
-        $traducciones=$traduccion_repo->findByIdioma([
-            'idioma' => $idioma
-        ]);
+            $traducciones=$traduccion_repo->findByIdioma([
+                'idioma' => $idioma
+            ]);
 
-        $response = new Response(json_encode($traducciones));
-        $response->headers->set('Content-Type', 'application/json');
-        //Datos a devolver
-        $response=[];
+            $response = new Response(json_encode($traducciones));
+            $response->headers->set('Content-Type', 'application/json');
+            //Datos a devolver
+            $response=[];
 
-        foreach ($traducciones as $traduccion) {
-            $response[]=[
-                'id' => $traduccion->getId(),
-                'idioma' => $traduccion->getIdioma(),
-                'titulo' => $traduccion->getTitulo(),
-                'descripcion' => $traduccion->getDescripcion(),
-                'servicio' => ['id'=>$traduccion->getServicio()->getId(),
-                               'precio'=>$traduccion->getServicio()->getPrecio(),
-                               'horarios'=>$this->getHorarios($traduccion->getServicio()->getHorarios())]
-            ];
+            foreach ($traducciones as $traduccion) {
+                $response[]=[
+                    'id' => $traduccion->getId(),
+                    'idioma' => $traduccion->getIdioma(),
+                    'titulo' => $traduccion->getTitulo(),
+                    'descripcion' => $traduccion->getDescripcion(),
+                    'servicio' => ['id'=>$traduccion->getServicio()->getId(),
+                                'precio'=>$traduccion->getServicio()->getPrecio(),
+                                'horarios'=>$this->getHorarios($traduccion->getServicio()->getHorarios())]
+                ];
 
-        }
-        return new JsonResponse($response, Response::HTTP_OK);
+            }
+            return new JsonResponse($response, Response::HTTP_OK);
+        }    
     }
 
     private function getHorarios($horarios){

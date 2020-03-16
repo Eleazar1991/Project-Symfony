@@ -26,42 +26,50 @@ class ReservaController extends AbstractController
 
 
         //Obtengo datos del formulario
-        $data=$request->request->all();
+        $data=json_decode($request->getContent(),true);
 
         //Obtengo servicio
         //Cargar repositorio servicio
         $servicio_repo=$this->getDoctrine()->getRepository(Servicio::class);
         $servicio=$servicio_repo->findOneById(['id'=>$data['servicio_id']]);
 
-        //Obtengo horario
-        //Cargar repositorio horario
-        $horario_repo=$this->getDoctrine()->getRepository(Horario::class);
-        $horario=$horario_repo->findOneById(['id'=>$data['horario_id']]);
-        //Horario disponible? y horario corresponde con servicio?
-        if($horario->getDisponible() && $servicio->getId()==$horario->getServicio()->getId()){
-            //Creo Reserva
-            $reserva=new Reserva();
-            $reserva->setNombreCliente($data['nombre_cliente']);
-            $reserva->setServicio($servicio);
-            $reserva->setHorario($horario);
+        //Si el servicio existe y tiene horarios
+        if($servicio && count($servicio->getHorarios())>0){
+            //Obtengo horario
+            //Cargar repositorio horario
+            $horario_repo=$this->getDoctrine()->getRepository(Horario::class);
+            $horario=$horario_repo->findOneById(['id'=>$data['horario_id']]);
+            //Horario disponible? y horario corresponde con servicio?
+            if($horario->getDisponible() && $servicio->getId()==$horario->getServicio()->getId()){
+                //Creo Reserva
+                $reserva=new Reserva();
+                $reserva->setNombreCliente($data['nombre_cliente']);
+                $reserva->setServicio($servicio);
+                $reserva->setHorario($horario);
 
-            //Guardo en bd
-            $entityManager=$this->getDoctrine()->getManager();
-            $entityManager->persist($reserva);
-            $entityManager->flush();
-            
+                //Guardo en bd
+                $entityManager=$this->getDoctrine()->getManager();
+                $entityManager->persist($reserva);
+                $entityManager->flush();
+                
 
-            //Modifico horario disponible=false
-            $horario->setDisponible(false);
-            $entityManager=$this->getDoctrine()->getManager();
-            $entityManager->persist($horario);
-            $entityManager->flush();
+                //Modifico horario disponible=false
+                $horario->setDisponible(false);
+                $entityManager=$this->getDoctrine()->getManager();
+                $entityManager->persist($horario);
+                $entityManager->flush();
 
+            }else{
+                $response[]=['message'=>'Coudln´t create the reservation the schedule is not available'];
+                return new JsonResponse($response, Response::HTTP_NOT_FOUND);
+            }
+            $response[]=['message'=>'Reservation created'];
+            return new JsonResponse($response, Response::HTTP_OK);
         }else{
-            $response[]=['message'=>'Coudln´t create the reservation the hours are not free'];
+            $response[]=['message'=>'There are not schedules in this service'];
             return new JsonResponse($response, Response::HTTP_NOT_FOUND);
         }
-        $response[]=['message'=>'Reservation created'];
-        return new JsonResponse($response, Response::HTTP_OK);
+        
+
     }
 }    
